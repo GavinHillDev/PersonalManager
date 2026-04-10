@@ -48,18 +48,18 @@ namespace PersonalManager.Windows
         {
             Mouse.Capture(null);
             var calendar = sender as Calendar;
-            if (calendar.SelectedDate.HasValue)
-            {
-                CalendarPa window = new CalendarPage();
-                window.Owner = this;
-                bool? result = window.ShowDialog();
-                //object block = parentGrid.FindName("ListBlock");
-                //TextBlock test = block as TextBlock;
-                //test.Text = calendar.SelectedDate.Value.ToString();
+            //if (calendar.SelectedDate.HasValue)
+            //{
+            //    CalendarPa window = new CalendarPage();
+            //    window.Owner = this;
+            //    bool? result = window.ShowDialog();
+            //    //object block = parentGrid.FindName("ListBlock");
+            //    //TextBlock test = block as TextBlock;
+            //    //test.Text = calendar.SelectedDate.Value.ToString();
 
-            }
+            //}
            
         }
     }
-    }
+    
 }
