@@ -13,18 +13,28 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using static System.Net.Mime.MediaTypeNames;
-using PersonalManager.Windows;
+
+using PersonalManager.Pages;
 namespace PersonalManager
 {
 
-    public partial class MainWindow : NavigationWindow
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            
-
+           MainFrame.Navigate(new HubPage());
         }
 
+        private void GoHome(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new HubPage());
         }
+
+        //private void GoHub(object sender, RoutedEventArgs e)
+        //{
+        //    //MainFrame.Navigate(new HubPage());
+        //}
+
+    }
 }

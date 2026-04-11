@@ -15,14 +15,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace PersonalManager.Windows
+namespace PersonalManager.Pages
 {
     /// <summary>
-    /// Interaction logic for Test.xaml
+    /// Interaction logic for HubPage.xaml
     /// </summary>
-    public partial class Test : Page
+    public partial class HubPage : Page
     {
-        public Test()
+        public HubPage()
         {
             InitializeComponent();
             object block = parentGrid.FindName("TextBlockOne");
@@ -58,8 +58,7 @@ namespace PersonalManager.Windows
             //    //test.Text = calendar.SelectedDate.Value.ToString();
 
             //}
-           
+
         }
     }
-    
 }
