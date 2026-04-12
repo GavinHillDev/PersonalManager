@@ -9,6 +9,6 @@
       Title="DateSelection">
 
     <Grid>
-        
+        <TextBlock Text="Date Page"></TextBlock>
     </Grid>
 </Page>

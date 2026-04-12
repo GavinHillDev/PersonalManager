@@ -30,6 +30,10 @@ namespace PersonalManager
         {
             MainFrame.Navigate(new HubPage());
         }
+        private void PomodoroPage(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new PomodoroPage());
+        }
 
         //private void GoHub(object sender, RoutedEventArgs e)
         //{

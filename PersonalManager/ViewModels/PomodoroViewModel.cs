@@ -6,17 +6,18 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace PersonalManager.ViewModels
 {
-    internal class HubViewModel : INotifyPropertyChanged
+    internal class PomodoroViewModel:INotifyPropertyChanged
     {
-        public string _displayText = "Initial Text";
+        //Button Test
+        private string _displayText = "Before Change";
+
         public string DisplayText
         {
-            get => _displayText;
+            get { return _displayText; }
             set
             {
                 _displayText = value;
@@ -24,14 +25,15 @@ namespace PersonalManager.ViewModels
             }
         }
         public ICommand ChangeTextCommand { get; }
-
-        public HubViewModel() {
+        public PomodoroViewModel() 
+        {
             ChangeTextCommand = new RelayCommand(ChangeText);
         }
         public void ChangeText()
         {
-            DisplayText = "Changed Text";
+            DisplayText = "Updated Text";
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -39,7 +41,5 @@ namespace PersonalManager.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        //Navigate to Calendar Page Code
-        //public 
     }
 }
