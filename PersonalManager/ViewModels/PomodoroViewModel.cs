@@ -6,15 +6,16 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PersonalManager.ViewModels
 {
     internal class PomodoroViewModel:INotifyPropertyChanged
     {
         //Button Test
-        private string _displayText = "Before Change";
-
+        private string _displayText = "Please enter Study time and break length";
         public string DisplayText
         {
             get { return _displayText; }
@@ -24,14 +25,39 @@ namespace PersonalManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string StudyTime
+        {
+
+        }
+
+        public string BreakTime
+        {
+            get
+            {
+
+            }
+            set
+            {
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand ChangeTextCommand { get; }
         public PomodoroViewModel() 
         {
-            ChangeTextCommand = new RelayCommand(ChangeText);
+            ChangeTextCommand = new RelayCommand(DateTimer);
         }
-        public void ChangeText()
+        public void DateTimer()
         {
-            DisplayText = "Updated Text";
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += (s, e) =>
+            {
+                 DisplayText = DateTime.Now.Second.ToString();
+            };
+            timer.Start();
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

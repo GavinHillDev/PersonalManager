@@ -20,5 +20,8 @@
 
         <Button Grid.Column="2" Width="100" Height="100px" Background="AliceBlue" Command="{Binding ChangeTextCommand}" Content="Click Me" />
         <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding DisplayText}"></TextBlock>
+        <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding StudyTime}"></TextBlock>
+        <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding BreakTime}"></TextBlock>
+
     </Grid>
 </Page>
