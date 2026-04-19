@@ -20,8 +20,14 @@
 
         <Button Grid.Column="2" Width="100" Height="100px" Background="AliceBlue" Command="{Binding ChangeTextCommand}" Content="Click Me" />
         <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding DisplayText}"></TextBlock>
-        <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding StudyTime}"></TextBlock>
-        <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding BreakTime}"></TextBlock>
+        <StackPanel>
+            <Label> Minutes to Break</Label>
+            <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding StudyTime}"></TextBox>
+            <Label>Break Length</Label>
+            <TextBlock Grid.Column="0" Width="100" Height="100px" Text="{Binding BreakTime}"></TextBlock>
+            <Label>Repeat Length</Label>
+        </StackPanel>
+         
 
     </Grid>
 </Page>

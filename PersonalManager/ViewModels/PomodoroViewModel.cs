@@ -16,6 +16,7 @@ namespace PersonalManager.ViewModels
     {
         //Button Test
         private string _displayText = "Please enter Study time and break length";
+        public int _baseStudyTime = 0;
         public string DisplayText
         {
             get { return _displayText; }
@@ -28,20 +29,28 @@ namespace PersonalManager.ViewModels
 
         public string StudyTime
         {
-
-        }
-
-        public string BreakTime
-        {
             get
             {
-
+                return _baseStudyTime.ToString();
             }
             set
             {
+                StudyTime = value;
                 OnPropertyChanged();
             }
         }
+
+        //public string BreakTime
+        //{
+        //    get
+        //    {
+
+        //    }
+        //    set
+        //    {
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public ICommand ChangeTextCommand { get; }
         public PomodoroViewModel() 
@@ -50,14 +59,30 @@ namespace PersonalManager.ViewModels
         }
         public void DateTimer()
         {
+            int currentTime = 0;
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += (s, e) =>
             {
-                 DisplayText = DateTime.Now.Second.ToString();
+                currentTime += 1;
+                timeFormatString(currentTime);
+                 //DisplayText = currentTime.ToString();
             };
             timer.Start();
 
+        }
+        public void timeFormatString(int timer)
+        {
+            int minutes = 0;
+            int seconds;
+            if (timer % 20 == 0)
+            {
+                minutes = (timer / 20);
+                DisplayText = minutes.ToString();
+            }
+            
+
+             
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
