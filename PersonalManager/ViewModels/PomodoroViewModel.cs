@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -16,7 +18,8 @@ namespace PersonalManager.ViewModels
     {
         //Button Test
         private string _displayText = "Please enter Study time and break length";
-        public int _baseStudyTime = 0;
+        public string _baseStudyTime = "0";
+        DispatcherTimer timer = new DispatcherTimer();
         public string DisplayText
         {
             get { return _displayText; }
@@ -31,12 +34,16 @@ namespace PersonalManager.ViewModels
         {
             get
             {
-                return _baseStudyTime.ToString();
+                return this._baseStudyTime;
             }
             set
             {
-                StudyTime = value;
-                OnPropertyChanged();
+                if (!string.Equals(this._baseStudyTime, value))
+                {
+                    this._baseStudyTime = value;
+                    OnPropertyChanged();
+                }
+                
             }
         }
 
@@ -55,31 +62,103 @@ namespace PersonalManager.ViewModels
         public ICommand ChangeTextCommand { get; }
         public PomodoroViewModel() 
         {
-            ChangeTextCommand = new RelayCommand(DateTimer);
+            ChangeTextCommand = new RelayCommand(timeFormatString);
+           // ChangeTextCommand = new RelayCommand(DateTimer);
         }
-        public void DateTimer()
+        public void DateTimer(int hrs, int mins)
         {
-            int currentTime = 0;
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += (s, e) =>
+            int secondInterval = 0;
+            int minuteInterval = 0;
+            int hours = hrs;
+            int seconds = 0;
+            int minutes = mins;
+            bool isFinished = false;
+
+            if (hours == 0 && minutes == 0 || isFinished == true)
             {
-                currentTime += 1;
-                timeFormatString(currentTime);
-                 //DisplayText = currentTime.ToString();
-            };
-            timer.Start();
+                DisplayText = "Timer Finished";
+                timer.Stop();
+            }
+            if (hours != 0 || minutes != 0 && isFinished == false)
+            {
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += (s, e) =>
+                {
+                
+ 
+ 
+                    if (minutes > 0)
+                    {
+                        secondInterval += 1;
+                        
+                        if (secondInterval == 60)
+                        {
+                            minutes -= 1;
+                            secondInterval = 0;
+                        }
+                    }
+ 
+                    if (hours > 0)
+                    {
+                        minuteInterval += 1;
+                        if (minuteInterval == 60)
+                        {
+                            hours -= 1;
+                            minuteInterval = 0;
+                        }
+                    }
+                    
+                    //Implement Break and Timer Restart
+
+ 
+                     DisplayText = $"{secondInterval.ToString()} : {minuteInterval.ToString()}";
+                    //DisplayText = $"{hours.ToString()} : {minutes.ToString()}";
+
+                    if (secondInterval == 0 && minuteInterval == 0)
+                    {
+                        DisplayText = "Timer Finished";
+                        isFinished = true;
+                    }
+                 };
+                timer.Start();
+            }
+           
 
         }
-        public void timeFormatString(int timer)
+ 
+        public void timeFormatString()
         {
+            if (this._baseStudyTime == null)
+            {
+                //Stop from moving forward
+            }
+            int time = Int32.Parse(this._baseStudyTime);
+            int hours = 0;
             int minutes = 0;
             int seconds;
-            if (timer % 20 == 0)
+
+            if (time % 60 == 0)
             {
-                minutes = (timer / 20);
-                DisplayText = minutes.ToString();
+                hours = time / 60;
+
             }
+            if (time % 60 != 0)
+            {
+                hours = time / 60;
+                minutes = time - (hours * 60);
+            }
+          DateTimer(hours, minutes);
+         // DisplayText = $"{ hours.ToString()} : {minutes.ToString()}";
+            //Study Time > Hours, Minutes, Seconds
+            //Break Time > If Any countdown until then
+
+
+
+            //if (timer % 60 == 0)
+            //{
+            //    minutes = (timer / 60);
+            //    DisplayText = minutes.ToString();
+            //}
             
 
              

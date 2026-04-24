@@ -22,9 +22,10 @@
         <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding DisplayText}"></TextBlock>
         <StackPanel>
             <Label> Minutes to Break</Label>
-            <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding StudyTime}"></TextBox>
+            <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding StudyTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label>Break Length</Label>
-            <TextBlock Grid.Column="0" Width="100" Height="100px" Text="{Binding BreakTime}"></TextBlock>
+            <TextBlock Text="{Binding StudyTime}"></TextBlock>
+            <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding BreakTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label>Repeat Length</Label>
         </StackPanel>
          
