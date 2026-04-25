@@ -27,6 +27,8 @@
             <TextBlock Text="{Binding StudyTime}"></TextBlock>
             <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding BreakTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label>Repeat Length</Label>
+            <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding RepeatCycle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
         </StackPanel>
          
 

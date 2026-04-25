@@ -19,6 +19,8 @@ namespace PersonalManager.ViewModels
         //Button Test
         private string _displayText = "Please enter Study time and break length";
         public string _baseStudyTime = "0";
+        public string _baseBreakTime = "5";
+        public string _baseRepeatCycle = "0";
         DispatcherTimer timer = new DispatcherTimer();
         public string DisplayText
         {
@@ -46,18 +48,39 @@ namespace PersonalManager.ViewModels
                 
             }
         }
+        public string RepeatCycle
+        {
+            get
+            {
+                return this._baseRepeatCycle;
+            }
+            set
+            {
+                if (!string.Equals(this._baseRepeatCycle, value))
+                {
+                    this._baseRepeatCycle = value;
+                    OnPropertyChanged();
+                }
 
-        //public string BreakTime
-        //{
-        //    get
-        //    {
+            }
+        }
+         
+        public string BreakTime
+        {
+            get
+            {
+                return this._baseBreakTime;
+            }
+            set
+            {
+                if (!string.Equals(this._baseBreakTime, value))
+                {
+                    this._baseBreakTime = value;
+                    OnPropertyChanged();
+                }
 
-        //    }
-        //    set
-        //    {
-        //        OnPropertyChanged();
-        //    }
-        //}
+            }
+        }
 
         public ICommand ChangeTextCommand { get; }
         public PomodoroViewModel() 
@@ -70,16 +93,18 @@ namespace PersonalManager.ViewModels
             int secondInterval = 0;
             int minuteInterval = 0;
             int hours = hrs;
-            int seconds = 0;
+            int seconds = 60;
             int minutes = mins;
             bool isFinished = false;
+            int breakTime = Int32.Parse(this._baseBreakTime);
+            int repeatCycle = Int32.Parse(this._baseRepeatCycle);
 
-            if (hours == 0 && minutes == 0 || isFinished == true)
+            if (repeatCycle == 0 || isFinished == true)
             {
-                DisplayText = "Timer Finished";
+                DisplayText = "Timer Finished after break";
                 timer.Stop();
             }
-            if (hours != 0 || minutes != 0 && isFinished == false)
+            if (hours != 0 || minutes != 0 && repeatCycle > 0 && isFinished == false)
             {
                 timer.Interval = TimeSpan.FromSeconds(1);
                 timer.Tick += (s, e) =>
@@ -90,11 +115,12 @@ namespace PersonalManager.ViewModels
                     if (minutes > 0)
                     {
                         secondInterval += 1;
-                        
+                        seconds -= 1;
                         if (secondInterval == 60)
                         {
                             minutes -= 1;
                             secondInterval = 0;
+                            seconds = 60;
                         }
                     }
  
@@ -110,22 +136,71 @@ namespace PersonalManager.ViewModels
                     
                     //Implement Break and Timer Restart
 
- 
-                     DisplayText = $"{secondInterval.ToString()} : {minuteInterval.ToString()}";
+                    
+                     DisplayText = $" MB {secondInterval.ToString()} : {minuteInterval.ToString()} : {seconds.ToString()}";
                     //DisplayText = $"{hours.ToString()} : {minutes.ToString()}";
 
-                    if (secondInterval == 0 && minuteInterval == 0)
+                    if (hours == 0 && minutes == 0 && repeatCycle > 0)
+                    {
+                        isFinished = true;
+                        timer.Stop();
+                        breakTimer();
+                        
+                    }
+                    if (repeatCycle == 0 && hours == 0 && minutes == 0)
                     {
                         DisplayText = "Timer Finished";
-                        isFinished = true;
+                        timer.Stop();
                     }
-                 };
+                };
                 timer.Start();
             }
            
 
         }
- 
+        public void breakTimer()
+        {
+            int breaklength = Int32.Parse(this._baseBreakTime);
+            int breakTimer = 0;
+            int seconds  = 60;
+            System.Diagnostics.Debug.WriteLine("Break");
+            DispatcherTimer break_timer = new DispatcherTimer();
+            break_timer.Interval = TimeSpan.FromSeconds(1);
+            break_timer.Tick += (s, e) =>
+            {
+               System.Diagnostics.Debug.WriteLine("Break In Timer");
+               if (breaklength > 0)
+                    {
+                        breakTimer += 1;
+                        seconds -= 1;
+                        if (breakTimer == 60)
+                        {
+                            breaklength -= 1;
+                            breakTimer = 0;
+                            seconds = 60;
+                        }
+                    }
+                DisplayText = $"{breaklength} : {seconds}";
+               if (breaklength == 0) 
+               {
+                   
+                   break_timer.Stop();
+                   RepeatChecker();
+                   timeFormatString();
+               }
+           };
+           break_timer.Start();
+
+        }
+        public void RepeatChecker()
+        {
+            int _rCycle = Int32.Parse(this._baseRepeatCycle);
+            if (_rCycle > 0)
+            {
+                _rCycle -= 1;
+                this._baseRepeatCycle = _rCycle.ToString();
+            }
+        }
         public void timeFormatString()
         {
             if (this._baseStudyTime == null)
