@@ -95,6 +95,7 @@ namespace PersonalManager.ViewModels
             int hours = hrs;
             int seconds = 60;
             int minutes = mins;
+            int displayMinute = mins;
             bool isFinished = false;
             int breakTime = Int32.Parse(this._baseBreakTime);
             int repeatCycle = Int32.Parse(this._baseRepeatCycle);
@@ -114,8 +115,13 @@ namespace PersonalManager.ViewModels
  
                     if (minutes > 0)
                     {
+                        if (secondInterval == 0)
+                        {
+                            displayMinute -= 1;
+                        }
                         secondInterval += 1;
                         seconds -= 1;
+ 
                         if (secondInterval == 60)
                         {
                             minutes -= 1;
@@ -137,8 +143,8 @@ namespace PersonalManager.ViewModels
                     //Implement Break and Timer Restart
 
                     
-                     DisplayText = $" MB {secondInterval.ToString()} : {minuteInterval.ToString()} : {seconds.ToString()}";
-                    //DisplayText = $"{hours.ToString()} : {minutes.ToString()}";
+                     DisplayText = $" MB {hours.ToString()} : {displayMinute.ToString()} : {seconds.ToString()}";
+                    
 
                     if (hours == 0 && minutes == 0 && repeatCycle > 0)
                     {
@@ -163,6 +169,7 @@ namespace PersonalManager.ViewModels
             int breaklength = Int32.Parse(this._baseBreakTime);
             int breakTimer = 0;
             int seconds  = 60;
+            int displayMinute = breaklength;
             System.Diagnostics.Debug.WriteLine("Break");
             DispatcherTimer break_timer = new DispatcherTimer();
             break_timer.Interval = TimeSpan.FromSeconds(1);
@@ -171,7 +178,11 @@ namespace PersonalManager.ViewModels
                System.Diagnostics.Debug.WriteLine("Break In Timer");
                if (breaklength > 0)
                     {
-                        breakTimer += 1;
+                    if (breakTimer == 0)
+                    {
+                        displayMinute -= 1;
+                    }
+                    breakTimer += 1;
                         seconds -= 1;
                         if (breakTimer == 60)
                         {
@@ -180,7 +191,7 @@ namespace PersonalManager.ViewModels
                             seconds = 60;
                         }
                     }
-                DisplayText = $"{breaklength} : {seconds}";
+                DisplayText = $"{displayMinute} : {seconds}";
                if (breaklength == 0) 
                {
                    
