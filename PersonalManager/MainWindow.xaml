@@ -16,6 +16,7 @@
             <Button Content="Languages" />
             <Button Content="Journal" />
             <Button Content="Pomodoro" Click="PomodoroPage" />
+            <Button Content="TimeTracker" />
         </StackPanel>
 
         <!-- Main Content -->

@@ -16,10 +16,9 @@ namespace PersonalManager.ViewModels
 {
     internal class PomodoroViewModel:INotifyPropertyChanged
     {
-        //Button Test
         private string _displayText = "Please enter Study time and break length";
         public string _baseStudyTime = "0";
-        public string _baseBreakTime = "5";
+        public string _baseBreakTime = "1";
         public string _baseRepeatCycle = "0";
         DispatcherTimer timer = new DispatcherTimer();
         public string DisplayText
@@ -86,7 +85,6 @@ namespace PersonalManager.ViewModels
         public PomodoroViewModel() 
         {
             ChangeTextCommand = new RelayCommand(timeFormatString);
-           // ChangeTextCommand = new RelayCommand(DateTimer);
         }
         public void DateTimer(int hrs, int mins)
         {
@@ -234,18 +232,7 @@ namespace PersonalManager.ViewModels
                 minutes = time - (hours * 60);
             }
           DateTimer(hours, minutes);
-         // DisplayText = $"{ hours.ToString()} : {minutes.ToString()}";
-            //Study Time > Hours, Minutes, Seconds
-            //Break Time > If Any countdown until then
-
-
-
-            //if (timer % 60 == 0)
-            //{
-            //    minutes = (timer / 60);
-            //    DisplayText = minutes.ToString();
-            //}
-            
+         
 
              
         }
