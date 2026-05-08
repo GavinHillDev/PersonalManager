@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PersonalManager.Models
 {
-    public class Time
+    public class DailyTime
     {
         public int Id { get; set; }
 
