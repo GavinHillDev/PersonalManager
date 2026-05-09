@@ -26,8 +26,8 @@ namespace PersonalManager.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("Length")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Length")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()

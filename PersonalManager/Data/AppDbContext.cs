@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PersonalManager.Models;
+using System.IO;
 namespace PersonalManager.Data
 {
     public class AppDbContext: DbContext
@@ -13,7 +14,8 @@ namespace PersonalManager.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite("Data Source=app.db");
+            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"app.db");
+            options.UseSqlite($"Data Source={dbPath}");
         }
     }
 }

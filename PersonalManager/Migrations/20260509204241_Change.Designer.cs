@@ -11,8 +11,8 @@ using PersonalManager.Data;
 namespace PersonalManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260508011620_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260509204241_Change")]
+    partial class Change
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +29,8 @@ namespace PersonalManager.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("Length")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Length")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()

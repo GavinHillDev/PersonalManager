@@ -1,4 +1,6 @@
 ﻿using PersonalManager.Commands;
+using PersonalManager.Data;
+using PersonalManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,6 +90,10 @@ namespace PersonalManager.ViewModels
         }
         public void DateTimer(int hrs, int mins)
         {
+            int baseHours = hrs;
+            int baseMins = mins;
+            
+
             int secondInterval = 0;
             int minuteInterval = 0;
             int hours = hrs;
@@ -144,17 +150,31 @@ namespace PersonalManager.ViewModels
                      DisplayText = $" MB {hours.ToString()} : {displayMinute.ToString()} : {seconds.ToString()}";
                     
 
-                    if (hours == 0 && minutes == 0 && repeatCycle > 0)
+                    if (hours == 0 && minutes == 0 && repeatCycle > 1)
                     {
                         isFinished = true;
                         timer.Stop();
                         breakTimer();
                         
                     }
-                    if (repeatCycle == 0 && hours == 0 && minutes == 0)
+                    if (repeatCycle == 1 && hours == 0 && minutes == 0)
                     {
+                        System.Diagnostics.Debug.WriteLine(System.IO.Path.GetFullPath("app.db"));
                         DisplayText = "Timer Finished";
                         timer.Stop();
+                        using (var db = new AppDbContext())
+                        {
+                            System.Diagnostics.Debug.WriteLine("In DB");
+                            db.DailyTimes.Add(new DailyTime
+                            {
+                                Name = "Japanese Study",
+                                Length = Int32.Parse(this._baseStudyTime),
+                                Date = DateOnly.FromDateTime(DateTime.Now)
+
+                            });
+                            db.SaveChanges();
+                            System.Diagnostics.Debug.WriteLine(db.DailyTimes.Count());
+                        }
                     }
                 };
                 timer.Start();
@@ -168,7 +188,7 @@ namespace PersonalManager.ViewModels
             int breakTimer = 0;
             int seconds  = 60;
             int displayMinute = breaklength;
-            System.Diagnostics.Debug.WriteLine("Break");
+             
             DispatcherTimer break_timer = new DispatcherTimer();
             break_timer.Interval = TimeSpan.FromSeconds(1);
             break_timer.Tick += (s, e) =>

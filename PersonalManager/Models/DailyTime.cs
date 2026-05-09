@@ -12,7 +12,7 @@ namespace PersonalManager.Models
 
         public string Name { get; set; }
 
-        public TimeSpan Length { get; set; }
+        public int Length { get; set; }
 
         public DateOnly Date {  get; set; }
 
