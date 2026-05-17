@@ -11,7 +11,7 @@ namespace PersonalManager.Data
     public class AppDbContext: DbContext
     {
         public DbSet<DailyTime> DailyTimes {  get; set; }
-
+        public DbSet<StudyItem> StudyItems { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"app.db");

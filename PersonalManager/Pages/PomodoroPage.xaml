@@ -28,9 +28,12 @@
             <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding BreakTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label>Repeat Length</Label>
             <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding RepeatCycle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox>
-                <ComboBoxItem Name="Japanese" >Japanese</ComboBoxItem>
+            </StackPanel>
+        <StackPanel Grid.Column="2">
+            <ComboBox IsEditable="True" ItemsSource="{Binding StudyChoices}" DisplayMemberPath="StudyItemName" Text="{Binding AddStudyChoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+               
             </ComboBox>
+            <Button Command="{Binding AddCategory}> Add Category</Button>
         </StackPanel>
          
 
