@@ -17,7 +17,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-
+using PersonalManager.ServiceLayer;
+using System.Windows.Data;
 namespace PersonalManager.ViewModels
 {
     internal class PomodoroViewModel : INotifyPropertyChanged
@@ -26,6 +27,7 @@ namespace PersonalManager.ViewModels
         public string _baseStudyTime = "0";
         public string _baseBreakTime = "1";
         public string _baseRepeatCycle = "0";
+        public string _baseName = "";
         DispatcherTimer timer = new DispatcherTimer();
         public string DisplayText
         {
@@ -88,9 +90,11 @@ namespace PersonalManager.ViewModels
         }
 
         public ICommand ChangeTextCommand { get; }
+        public ICommand AddCategory { get; }
         public PomodoroViewModel()
         {
             ChangeTextCommand = new RelayCommand(timeFormatString);
+            AddCategory = new RelayCommand(NewCategoryCommand);
         }
         public void DateTimer(int hrs, int mins)
         {
@@ -267,15 +271,43 @@ namespace PersonalManager.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        public ObservableCollection<StudyItem> StudyChoices { get; set; }
+        ObservableCollection<string> studyLayer = new ObservableCollection<string>(StudyItemServiceLayer.GetStudyItems());
+        public ObservableCollection<string> StudyChoices
+        {
+            get { return studyLayer; }
+            set { studyLayer = value; }
+        }
+
+         
 
         public class StudyItem
         {
-            public string Name { get; set; }
-
+            public string Name { get; set; } //Oberservalb
 
         }
+        public async void NewCategoryCommand()
+        {
+            await StudyItemServiceLayer.AddStudyItems(this._baseName);
 
+            CollectionViewSource.GetDefaultView(this.StudyChoices).Refresh(); //Fix refresh to show new EF items
+        }
+
+        public string AddStudyChoice
+        {
+            get
+            {
+                return this._baseName;
+            }
+            set
+            {
+                if (!string.Equals(this._baseName, value))
+                {
+                    this._baseName = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
 
         //    public class StudyChoice : ObservableCollection<StudyItem>
         //    {

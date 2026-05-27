@@ -19,6 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="2" Width="100" Height="100px" Background="AliceBlue" Command="{Binding ChangeTextCommand}" Content="Click Me" />
+         
         <TextBlock Grid.Column="1" Width="100" Height="100px" Text="{Binding DisplayText}"></TextBlock>
         <StackPanel>
             <Label> Minutes to Break</Label>
@@ -28,12 +29,13 @@
             <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding BreakTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label>Repeat Length</Label>
             <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding RepeatCycle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            </StackPanel>
+        </StackPanel>
         <StackPanel Grid.Column="2">
             <ComboBox IsEditable="True" ItemsSource="{Binding StudyChoices}" DisplayMemberPath="StudyItemName" Text="{Binding AddStudyChoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-               
             </ComboBox>
-            <Button Command="{Binding AddCategory}> Add Category</Button>
+            <ListView ItemsSource="{Binding StudyChoices}"></ListView>
+            <TextBlock Text="{Binding AddStudyChoice}"></TextBlock>
+            <Button Command="{Binding AddCategory}">Add Category</Button>
         </StackPanel>
          
 
