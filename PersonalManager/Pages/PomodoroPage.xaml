@@ -31,9 +31,8 @@
             <TextBox Grid.Column="0" Width="100" Height="100px" Text="{Binding RepeatCycle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="2">
-            <ComboBox IsEditable="True" ItemsSource="{Binding StudyChoices}" DisplayMemberPath="StudyItemName" Text="{Binding AddStudyChoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox IsEditable="True" ItemsSource="{Binding StudyChoices}" Text="{Binding AddStudyChoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </ComboBox>
-            <ListView ItemsSource="{Binding StudyChoices}"></ListView>
             <TextBlock Text="{Binding AddStudyChoice}"></TextBlock>
             <Button Command="{Binding AddCategory}">Add Category</Button>
         </StackPanel>

@@ -279,17 +279,15 @@ namespace PersonalManager.ViewModels
         }
 
          
-
-        public class StudyItem
-        {
-            public string Name { get; set; } //Oberservalb
-
-        }
         public async void NewCategoryCommand()
         {
             await StudyItemServiceLayer.AddStudyItems(this._baseName);
-
-            CollectionViewSource.GetDefaultView(this.StudyChoices).Refresh(); //Fix refresh to show new EF items
+            studyLayer.Clear();
+            List<string> newNames = StudyItemServiceLayer.GetStudyItems();
+            foreach (string name in newNames) {
+                studyLayer.Add(name);
+            }
+            
         }
 
         public string AddStudyChoice
@@ -309,30 +307,5 @@ namespace PersonalManager.ViewModels
             }
         }
 
-        //    public class StudyChoice : ObservableCollection<StudyItem>
-        //    {
-        //        public StudyChoice(AppDbContext context)
-        //        {
-        //            var studyselections = context.StudyItems.ToListAsync();
-        //            System.Diagnostics.Debug.WriteLine(studyselections);
-        //        }
-
-        //        public class StudyItem
-        //        {
-        //            private string _studyItemName;
-
-        //            public StudyItem(string studyItemName)
-        //            {
-        //                this._studyItemName = studyItemName;
-        //            }
-        //           public string StudyItemName
-        //            {
-        //                get { return _studyItemName; }
-        //                set { _studyItemName = value; }
-        //            }
-        //        }
-
-        //    }
-        //}
     }
 }
